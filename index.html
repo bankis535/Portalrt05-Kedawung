@@ -1,1596 +1,1416 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Warga RT 05 / Ndawung Kulon</title>
+    <title>Portal RT 05 / Ndawung Kulon - Media Sosial & Marketplace UMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon Library CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-color: #198754;
-            --primary-hover: #146c43;
-            --primary-light: #e8f5e9;
-            --secondary-color: #20c997;
-            --accent-color: #d97706;
-            --dark-color: #1e293b;
-            --light-bg: #f8faf8;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --text-muted: #64748b;
-            --danger-color: #dc3545;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 18px;
-            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-family);
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            background-color: var(--light-bg);
-            color: var(--dark-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
         }
-
-        .app-header {
-            background: linear-gradient(135deg, #0f5132 0%, var(--primary-color) 100%);
-            color: #ffffff;
-            padding: 1rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .header-brand svg {
-            width: 32px;
-            height: 32px;
-            fill: #ffffff;
-        }
-
-        .header-title h1 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .header-title p {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        .user-session-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .role-badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .btn-logout {
-            background: rgba(220, 53, 69, 0.85);
-            color: white;
-            border: none;
-            padding: 0.35rem 0.75rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            transition: background 0.2s;
-        }
-
-        .btn-logout:hover {
-            background: var(--danger-color);
-        }
-
-        .tab-nav-container {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 60px;
-            z-index: 90;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .tab-nav {
-            display: flex;
-            max-width: 1000px;
-            margin: 0 auto;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .tab-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            flex: 1;
-            min-width: 110px;
-            padding: 0.85rem 0.5rem;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .tab-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-            background-color: var(--primary-light);
-        }
-
-        .main-container {
-            max-width: 1000px;
-            width: 100%;
-            margin: 1.5rem auto;
-            padding: 0 1rem 3rem 1rem;
-            flex: 1;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.25s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            padding: 1.25rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px dashed var(--border-color);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-title svg {
-            width: 22px;
-            height: 22px;
-            fill: var(--primary-color);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            padding: 0.6rem 1.2rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: var(--dark-color);
-        }
-
-        .btn-secondary:hover {
-            background-color: #cbd5e1;
-        }
-
-        .btn-success {
-            background-color: #10b981;
-            color: white;
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-
-        .btn-sm {
-            padding: 0.35rem 0.7rem;
-            font-size: 0.8rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.35rem;
-            font-size: 0.875rem;
-            color: #334155;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.6rem 0.8rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            font-size: 0.9rem;
-            transition: border-color 0.2s;
-            background-color: #fff;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15);
-        }
-
-        .login-wrapper {
-            max-width: 440px;
-            margin: 3rem auto;
-            padding: 0 1rem;
-        }
-
-        .login-card {
-            background: #ffffff;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            padding: 2rem 1.5rem;
-            text-align: center;
-        }
-
-        .login-logo {
-            width: 64px;
-            height: 64px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem auto;
-        }
-
-        .login-logo svg {
-            width: 36px;
-            height: 36px;
-            fill: var(--primary-color);
-        }
-
-        .login-instructions {
-            background: #f1f5f9;
-            border-left: 4px solid var(--primary-color);
-            padding: 0.85rem;
-            border-radius: 4px;
-            text-align: left;
-            margin: 1.25rem 0;
-            font-size: 0.85rem;
-        }
-
-        .login-instructions h4 {
-            color: var(--primary-color);
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
-        }
-
-        .role-selector {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .role-option {
-            flex: 1;
-            border: 1px solid var(--border-color);
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .role-option input {
-            accent-color: var(--primary-color);
-        }
-
-        .feed-post-card {
-            background: #fff;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .post-author {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .author-info h4 {
-            font-size: 0.95rem;
-            line-height: 1.2;
-        }
-
-        .author-info span {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .post-image {
-            width: 100%;
-            max-height: 380px;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-            margin: 0.75rem 0;
-            border: 1px solid #f1f5f9;
-        }
-
-        .post-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #f1f5f9;
-            margin-top: 0.75rem;
-        }
-
-        .btn-action {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .btn-action:hover {
-            background-color: #f1f5f9;
-            color: var(--primary-color);
-        }
-
-        .btn-action.liked {
-            color: #e11d48;
-        }
-
-        .comments-section {
-            background: #f8fafc;
-            border-radius: var(--radius-sm);
-            padding: 0.75rem;
-            margin-top: 0.75rem;
-        }
-
-        .comment-item {
-            font-size: 0.825rem;
-            padding: 0.35rem 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .comment-item:last-child {
-            border-bottom: none;
-        }
-
-        .comment-user {
-            font-weight: 700;
-            color: #334155;
-            margin-right: 0.35rem;
-        }
-
-        .marketplace-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .product-card {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .product-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
+        .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
-
-        .product-body {
-            padding: 1rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-badge {
-            align-self: flex-start;
-            background: var(--primary-light);
-            color: var(--primary-color);
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.2rem 0.5rem;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
             border-radius: 4px;
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
         }
-
-        .product-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
-
-        .product-price {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .product-seller {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .product-desc {
-            font-size: 0.825rem;
-            color: #475569;
-            margin-bottom: 1rem;
-            flex: 1;
-        }
-
-        .btn-wa {
-            background-color: #25d366;
-            color: white;
-            width: 100%;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .btn-wa:hover {
-            background-color: #1da851;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: #fff;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .stat-card h3 {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
-        }
-
-        .stat-card .amount {
-            font-size: 1.35rem;
-            font-weight: 800;
-        }
-
-        .amount.in { color: var(--primary-color); }
-        .amount.out { color: var(--danger-color); }
-        .amount.balance { color: #0284c7; }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.875rem;
-            text-align: left;
-        }
-
-        .table th, .table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .table th {
-            background: #f8fafc;
-            font-weight: 700;
-            color: #334155;
-        }
-
-        .badge-type {
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .badge-in { background: #dcfce7; color: #15803d; }
-        .badge-out { background: #fee2e2; color: #b91c1c; }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: #fff;
-            border-radius: var(--radius-md);
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .btn-close {
-            background: none;
-            border: none;
-            font-size: 1.25rem;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .toast-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--dark-color);
-            color: white;
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-md);
-            z-index: 2000;
-            display: none;
-            font-size: 0.875rem;
-            font-weight: 600;
-            max-width: 320px;
-        }
-
-        @media (max-width: 600px) {
-            .app-header {
-                padding: 0.75rem 1rem;
-            }
-            .header-title h1 {
-                font-size: 1rem;
-            }
-            .tab-btn {
-                min-width: 80px;
-                font-size: 0.75rem;
-                padding: 0.6rem 0.25rem;
-            }
-            .main-container {
-                padding-left: 0.5rem;
-                padding-right: 0.5rem;
-            }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
         }
     </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
-    <header class="app-header">
-        <div class="header-brand">
-            <svg viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            </svg>
-            <div class="header-title">
-                <h1>RT 05 / Ndawung Kulon</h1>
-                <p>Portal Resmi Warga & UMKM</p>
-            </div>
-        </div>
-        <div class="user-session-info" id="sessionHeaderInfo" style="display: none;">
-            <span class="role-badge" id="userRoleBadge">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                <span id="roleText">Warga</span>
-            </span>
-            <button class="btn-logout" onclick="App.logout()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-                Keluar
-            </button>
-        </div>
-    </header>
-
-    <div id="loginView" class="login-wrapper">
-        <div class="login-card">
-            <div class="login-logo">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8s0 0 0 0z"/>
-                </svg>
-            </div>
-            <h2>Masuk Portal RT 05</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Silakan pilih peran dan masukkan kata sandi</p>
-
-            <div class="login-instructions">
-                <h4>🔑 Petunjuk Password Akses:</h4>
-                <p>• Password Warga: <strong>warga05</strong></p>
-                <p>• Password Admin: <strong>admin05</strong></p>
-            </div>
-
-            <form id="loginForm" onsubmit="App.handleLogin(event)">
-                <div class="form-group">
-                    <label>Pilih Peran (Role):</label>
-                    <div class="role-selector">
-                        <label class="role-option">
-                            <input type="radio" name="loginRole" value="warga" checked>
-                            Warga RT 05
-                        </label>
-                        <label class="role-option">
-                            <input type="radio" name="loginRole" value="admin">
-                            Admin RT 05
-                        </label>
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 glass-header border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & Name -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200">
+                        <i class="fa-solid fa-tree-city"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-bold text-lg text-slate-900 leading-tight">RT 05 Ndawung Kulon</h1>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200 hidden sm:inline-block">Asri & Rukun</span>
+                        </div>
+                        <p class="text-xs text-slate-500">Portal Warga, Media Sosial & UMKM</p>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="loginPassword">Kata Sandi (Password):</label>
-                    <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password..." required>
+                <!-- User Status & Auth Control -->
+                <div class="flex items-center gap-3">
+                    <div id="userBadge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border">
+                        <!-- Populated dynamically by JavaScript -->
+                    </div>
+
+                    <button id="authBtn" onclick="handleAuthAction()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
+                        <i class="fa-solid fa-right-to-bracket" id="authBtnIcon"></i>
+                        <span id="authBtnText">Masuk</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation Menu -->
+        <nav class="bg-white border-t border-slate-100 overflow-x-auto custom-scrollbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-4">
+                <button onclick="switchTab('berita')" id="tab-berita" class="nav-tab py-3 px-3 text-xs sm:text-sm font-semibold border-b-2 border-emerald-600 text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-bullhorn"></i> Berita & Pengumuman
+                </button>
+                <button onclick="switchTab('feeds')" id="tab-feeds" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-comments"></i> Feeds Warga
+                </button>
+                <button onclick="switchTab('marketplace')" id="tab-marketplace" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-store"></i> Marketplace UMKM
+                </button>
+                <button onclick="switchTab('kas')" id="tab-kas" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-wallet"></i> Transparansi Kas RT
+                </button>
+                <button onclick="switchTab('admin')" id="tab-admin" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-sliders"></i> Panel Admin & Pengaturan
+                    <span id="adminTabBadge" class="hidden bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded-full uppercase font-bold">Admin</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- Banner Himbauan / Kebersihan Lingkungan -->
+        <div class="mb-6 bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 opacity-15 text-9xl">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div class="relative z-10 max-w-2xl">
+                <div class="flex items-center gap-2 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-shield-halved"></i> Lingkungan Aman & Clean Energy RT 05
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold mb-2">Selamat Datang di Portal Warga Ndawung Kulon!</h2>
+                <p class="text-xs sm:text-sm text-emerald-100 leading-relaxed mb-3">
+                    Mari saling menjaga kebersihan saluran air, aktif kegiatan pos ronda malam, serta dukung produk usaha mikro milik tetangga sendiri.
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-broom text-emerald-300"></i> Kerja Bakti Rutin: Pekan ke-2
+                    </span>
+                    <span class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-person-shelter text-emerald-300"></i> Pos Ronda: 22.00 - 04.00 WIB
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 1: BERITA & PENGUMUMAN RT -->
+        <section id="sec-berita" class="tab-content space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-newspaper text-emerald-600"></i> Berita & Agenda RT 05
+                    </h2>
+                    <p class="text-xs text-slate-500">Informasi resmi, agenda gotong royong, dan kabar lingkungan terbaru</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <div class="relative flex-1 sm:w-64">
+                        <input type="text" id="searchNews" oninput="renderNews()" placeholder="Cari berita atau agenda..." class="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    </div>
+                    <button id="addNewsBtn" onclick="openModal('modalAddNews')" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 shrink-0 transition-colors">
+                        <i class="fa-solid fa-plus"></i> Tambah Berita
+                    </button>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 2: FEEDS / MEDIA SOSIAL WARGA -->
+        <section id="sec-feeds" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Post Creator & Stream -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Create Post Box -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div id="feedUserAvatar" class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <h3 id="feedUserName" class="text-sm font-bold text-slate-800">Warga RT 05</h3>
+                                <p class="text-xs text-slate-500">Bagikan kabar, kegiatan, atau foto lingkungan</p>
+                            </div>
+                        </div>
+                        <textarea id="postContent" rows="3" placeholder="Apa kabar lingkungan RT 05 hari ini? Berikan apresiasi atau kabar kegiatan..." class="w-full p-3 text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"></textarea>
+                        
+                        <!-- Image URL input toggle -->
+                        <div id="imageInputBox" class="hidden">
+                            <input type="url" id="postImageUrl" placeholder="Masukkan URL Foto (contoh: https://images.unsplash.com/...)" class="w-full p-2.5 text-xs rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+                            <button onclick="toggleImageInput()" type="button" class="text-xs text-slate-600 hover:text-emerald-600 font-medium flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-slate-50">
+                                <i class="fa-regular fa-image text-emerald-600"></i> Lampirkan Foto
+                            </button>
+                            <button onclick="createFeedPost()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
+                                <i class="fa-solid fa-paper-plane mr-1"></i> Postings Warga
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feed Posts List -->
+                    <div id="feedStream" class="space-y-4">
+                        <!-- Dynamic Content via JS -->
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem;">
+                <!-- Right Column: Sidebar Community Guidelines & Events -->
+                <div class="space-y-5">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-heart-pulse text-emerald-600"></i> Tata Tertib Lingkungan
+                        </h3>
+                        <ul class="text-xs text-slate-600 space-y-2.5">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Menjaga kebersihan pekarangan & memilah sampah organik/anorganik.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Penyampaian kritik/saran dilakukan secara sopan & kekeluargaan.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Melaporkan tamu menginap 1x24 jam kepada Ketua RT/RW.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Kontak Darurat RT -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-3">
+                        <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-phone-volume text-emerald-600"></i> Kontak Penting RT 05
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between items-center py-1 border-b border-emerald-100">
+                                <span class="text-emerald-800 font-medium">Ketua RT (Pak Supri)</span>
+                                <a href="https://wa.me/6281234567890" target="_blank" class="text-emerald-700 font-bold hover:underline">0812-3456-7890</a>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-emerald-100">
+                                <span class="text-emerald-800 font-medium">Koordinator Keamanan</span>
+                                <a href="https://wa.me/6281987654321" target="_blank" class="text-emerald-700 font-bold hover:underline">0819-8765-4321</a>
+                            </div>
+                            <div class="flex justify-between items-center py-1">
+                                <span class="text-emerald-800 font-medium">Pos Ronda Gardu 05</span>
+                                <span class="text-emerald-700 font-bold">Siaga 24 Jam</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: MARKETPLACE UMKM -->
+        <section id="sec-marketplace" class="tab-content hidden space-y-6">
+            <!-- Header Filter & Add Product -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-shop text-emerald-600"></i> Marketplace UMKM Ndawung Kulon
+                    </h2>
+                    <p class="text-xs text-slate-500">Dukung perekonomian warga dengan membeli produk lokal RT 05</p>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <select id="productCatFilter" onchange="renderProducts()" class="text-xs p-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Semua">Semua Kategori</option>
+                        <option value="Makanan & Minuman">Makanan & Minuman</option>
+                        <option value="Kerajinan">Kerajinan & Craft</option>
+                        <option value="Jasa">Jasa & Servis</option>
+                        <option value="Pertanian/Tanaman">Tanaman & Pertanian</option>
+                    </select>
+
+                    <button onclick="openModal('modalAddProduct')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm ml-auto">
+                        <i class="fa-solid fa-plus-circle"></i> Tambah Produk Saya
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: KAS RT TRANSPARAN -->
+        <section id="sec-kas" class="tab-content hidden space-y-6">
+            <!-- Balance Overview Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Saldo Kas RT</p>
+                        <h3 id="kasTotalSaldo" class="text-xl font-extrabold text-emerald-700">Rp 0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-down-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Pemasukan</p>
+                        <h3 id="kasTotalMasuk" class="text-lg font-bold text-slate-800">Rp 0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Pengeluaran</p>
+                        <h3 id="kasTotalKeluar" class="text-lg font-bold text-slate-800">Rp 0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Header & Add Button -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">Riwayat Transaksi Kas RT 05</h3>
+                        <p class="text-xs text-slate-500">Laporan iuran kebersihan, keamanan, dan belanja kebutuhan warga</p>
+                    </div>
+                    <button id="addKasBtn" onclick="openModal('modalAddKas')" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-plus"></i> Catat Transaksi Kas
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                                <th class="p-4">Tanggal</th>
+                                <th class="p-4">Jenis</th>
+                                <th class="p-4">Keterangan</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4 text-right">Jumlah</th>
+                                <th id="kasActionTh" class="p-4 text-center hidden">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kasTableBody" class="divide-y divide-slate-100 text-xs">
+                            <!-- Dynamic Content via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: PANEL ADMIN & PENGATURAN -->
+        <section id="sec-admin" class="tab-content hidden space-y-6">
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-lg shadow-sm">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h2 class="font-bold text-amber-900 text-base">Panel Pengurus & Pengaturan Sistem</h2>
+                    <p class="text-xs text-amber-800 mt-0.5">
+                        Khusus Pengurus RT 05 / Admin. Anda dapat mengelola password warga & admin, mengedit berita, memoderasi postingan & produk UMKM.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Change Password Form -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <i class="fa-solid fa-key text-emerald-600"></i> Pengaturan Password Akses Portal
+                    </h3>
+                    
+                    <!-- Form Ganti Password Warga -->
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2 border border-slate-200">
+                        <label class="text-xs font-semibold text-slate-700 block">Password Baru "Akses Warga":</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="newWargaPass" placeholder="Password Warga Baru" class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <button onclick="updatePassword('warga')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                                Simpan Warga
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Password default awal: <code class="bg-slate-200 px-1 py-0.5 rounded text-slate-700">warga05</code></p>
+                    </div>
+
+                    <!-- Form Ganti Password Admin -->
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2 border border-slate-200">
+                        <label class="text-xs font-semibold text-slate-700 block">Password Baru "Akses Admin / RT":</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="newAdminPass" placeholder="Password Admin Baru" class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <button onclick="updatePassword('admin')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                                Simpan Admin
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Password default awal: <code class="bg-slate-200 px-1 py-0.5 rounded text-slate-700">admin05</code></p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats & Reset Data -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <i class="fa-solid fa-chart-pie text-emerald-600"></i> Ringkasan Statistik Portal
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-center">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statNewsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Berita & Agenda</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statFeedsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Postings Feeds</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statProductsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Produk UMKM</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statKasCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Catatan Kas</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <button onclick="resetDataToDefault()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-semibold text-xs py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-left"></i> Reset Semua Data ke Default Bawaan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-1">
+            <p class="font-medium text-slate-700">Portal Digital RT 05 / Ndawung Kulon - Guyub Rukun Tumbuh Bersama</p>
+            <p>© 2026 Pengurus RT 05. Sistem Komunitas Warga & Marketplace Lokal.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: LOGIN MODAL (DUAL PASSWORD) -->
+    <div id="modalLogin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-6 relative border border-slate-100">
+            <button onclick="closeModal('modalLogin')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Masuk ke Portal RT 05</h3>
+                <p class="text-xs text-slate-500">Pilih tingkat akses dan masukkan password untuk melanjutkan</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <!-- Role Selector Radio Tabs -->
+                <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="loginRole" value="warga" checked onchange="updateLoginRoleHint()" class="peer hidden">
+                        <div class="py-2 text-center text-xs font-semibold rounded-lg text-slate-600 peer-checked:bg-white peer-checked:text-emerald-700 peer-checked:shadow-sm transition-all">
+                            <i class="fa-solid fa-user mr-1"></i> Warga RT
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="loginRole" value="admin" onchange="updateLoginRoleHint()" class="peer hidden">
+                        <div class="py-2 text-center text-xs font-semibold rounded-lg text-slate-600 peer-checked:bg-white peer-checked:text-amber-700 peer-checked:shadow-sm transition-all">
+                            <i class="fa-solid fa-user-gear mr-1"></i> Admin / RT
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Password Akses:</label>
+                    <div class="relative">
+                        <input type="password" id="loginPasswordInput" required placeholder="Masukkan password..." class="w-full pl-3 pr-10 py-2.5 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', 'eyeIcon')" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+                            <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Default Password Helper Hint -->
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
+                    <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info"></i> Petunjuk Password Default:
+                    </div>
+                    <ul class="text-[11px] text-emerald-800 space-y-0.5 list-disc list-inside">
+                        <li>Akses Warga: <code class="bg-emerald-200 px-1 py-0.5 rounded font-bold">warga05</code></li>
+                        <li>Akses Admin: <code class="bg-emerald-200 px-1 py-0.5 rounded font-bold">admin05</code></li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3 rounded-xl transition-all shadow-md shadow-emerald-200">
                     Masuk Sekarang
                 </button>
             </form>
         </div>
     </div>
 
-    <div id="appView" style="display: none;">
-        <nav class="tab-nav-container">
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="App.switchTab('berita')">
-                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
-                    Pengumuman
+    <!-- MODAL 2: ADD / EDIT NEWS -->
+    <div id="modalAddNews" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
+            <button onclick="closeModal('modalAddNews')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Tambah Berita / Pengumuman RT</h3>
+            <form onsubmit="saveNewsSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Judul Berita/Pengumuman</label>
+                    <input type="text" id="newsTitle" required placeholder="Contoh: Kerja Bakti Massal Sambut HUT RI" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-xs">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <select id="newsCategory" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Agenda">Agenda Warga</option>
+                            <option value="Pengumuman">Pengumuman Resmi</option>
+                            <option value="Kebersihan">Kebersihan & Sehat</option>
+                            <option value="Keamanan">Keamanan & Pos Ronda</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Tanggal Kegiatan/Rilis</label>
+                        <input type="text" id="newsDate" required placeholder="Contoh: Minggu, 12 Okt 2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Isi Berita Lengkap</label>
+                    <textarea id="newsContent" rows="4" required placeholder="Tuliskan rincian agenda, lokasi, atau himbauan..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Publikasikan Berita
                 </button>
-                <button class="tab-btn" onclick="App.switchTab('feed')">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    Feed Warga
-                </button>
-                <button class="tab-btn" onclick="App.switchTab('marketplace')">
-                    <svg viewBox="0 0 24 24"><path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13 0c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.5L15 9H9z"/></svg>
-                    UMKM Kulon
-                </button>
-                <button class="tab-btn" onclick="App.switchTab('kas')">
-                    <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                    Kas RT 05
-                </button>
-                <button class="tab-btn" id="adminTabBtn" onclick="App.switchTab('admin')" style="display: none;">
-                    <svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-                    Pengaturan
-                </button>
-            </div>
-        </nav>
-
-        <main class="main-container">
-
-            <section id="tab-berita" class="tab-content active">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">
-                            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
-                            Pengumuman & Agenda RT 05
-                        </span>
-                        <div id="adminBeritaAction" style="display: none;">
-                            <button class="btn btn-primary btn-sm" onclick="App.openModal('modalNews')">+ Buat Pengumuman</button>
-                        </div>
-                    </div>
-                    <div id="beritaList">
-                        <!-- Dynamic content -->
-                    </div>
-                </div>
-            </section>
-
-            <section id="tab-feed" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">
-                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                            Bagikan Kabar Warga
-                        </span>
-                    </div>
-                    <form id="feedForm" onsubmit="App.addFeedPost(event)">
-                        <div class="form-group">
-                            <input type="text" id="feedAuthorName" class="form-control" placeholder="Nama Anda (contoh: Pak Joko / Bu Rahma)..." required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="feedText" class="form-control" rows="3" placeholder="Apa kegiatan atau info warga hari ini? Contoh: 'Kerja bakti pembersihan selokan RT selesai...'" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label style="font-size: 0.8rem; color: var(--text-muted);">Pilih Gambar Kegiatan (Opsional):</label>
-                            <input type="file" id="feedImageFile" class="form-control" accept="image/*" onchange="App.handleImageUpload(event, 'feedImgPreview')">
-                            <input type="hidden" id="feedImgPreview">
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Posting Kabar</button>
-                    </form>
-                </div>
-
-                <div id="feedList">
-                    <!-- Dynamic feed posts -->
-                </div>
-            </section>
-
-            <section id="tab-marketplace" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">
-                            <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
-                            Katalog Produk UMKM Warga Ndawung Kulon
-                        </span>
-                        <button class="btn btn-primary btn-sm" onclick="App.openModal('modalProduct')">+ Jual Produk</button>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-                        Dukung usaha tetangga kita! Pesanan akan langsung terhubung ke WhatsApp penjual.
-                    </p>
-                    <div class="marketplace-grid" id="productGrid">
-                        <!-- Dynamic product cards -->
-                    </div>
-                </div>
-            </section>
-
-            <section id="tab-kas" class="tab-content">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Pemasukan</h3>
-                        <div class="amount in" id="totalIn">Rp 0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Pengeluaran</h3>
-                        <div class="amount out" id="totalOut">Rp 0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Saldo Kas RT 05</h3>
-                        <div class="amount balance" id="totalBalance">Rp 0</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">
-                            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                            Catatan Transaksi Keuangan Kas
-                        </span>
-                        <div id="adminKasAction" style="display: none;">
-                            <button class="btn btn-primary btn-sm" onclick="App.openModal('modalKas')">+ Catat Transaksi</button>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Keterangan</th>
-                                    <th>Jenis</th>
-                                    <th>Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody id="kasTableBody">
-                                <!-- Dynamic rows -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <section id="tab-admin" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">⚙️ Manajemen Kata Sandi (Admin Only)</span>
-                    </div>
-                    <form onsubmit="App.changePasswords(event)">
-                        <div class="form-group">
-                            <label for="passWargaInput">Password Baru Peran Warga:</label>
-                            <input type="text" id="passWargaInput" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="passAdminInput">Password Baru Peran Admin:</label>
-                            <input type="text" id="passAdminInput" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan Password Baru</button>
-                    </form>
-                </div>
-
-                <div class="card" style="border-color: #fca5a5;">
-                    <div class="card-header">
-                        <span class="card-title" style="color: var(--danger-color);">⚠️ Pemulihan Data Pabrik</span>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-                        Gunakan fitur ini jika ingin mengembalikan semua data berita, feed, produk UMKM, dan kas RT ke contoh data awal default.
-                    </p>
-                    <button class="btn btn-danger" onclick="App.resetToFactoryDefaults()">Reset & Kembalikan Data Default</button>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-
-    <!-- Modal Tambah Pengumuman -->
-    <div class="modal-overlay" id="modalNews">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Tambah Pengumuman / Agenda</h3>
-                <button class="btn-close" onclick="App.closeModal('modalNews')">&times;</button>
-            </div>
-            <form onsubmit="App.addNews(event)">
-                <div class="form-group">
-                    <label>Judul Pengumuman:</label>
-                    <input type="text" id="newsTitle" class="form-control" placeholder="Contoh: Kerja Bakti Masal" required>
-                </div>
-                <div class="form-group">
-                    <label>Kategori:</label>
-                    <select id="newsCategory" class="form-control">
-                        <option value="Kebersihan">Kebersihan</option>
-                        <option value="Keamanan">Keamanan</option>
-                        <option value="Sosial">Sosial / Arisan</option>
-                        <option value="Penting">Penting</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Tanggal / Waktu Pelaksanaan:</label>
-                    <input type="text" id="newsDate" class="form-control" placeholder="Contoh: Minggu, 12 Oktober 2026 - 07.00 WIB" required>
-                </div>
-                <div class="form-group">
-                    <label>Isi Detail Pengumuman:</label>
-                    <textarea id="newsContent" class="form-control" rows="4" placeholder="Detail kegiatan..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Publikasikan Pengumuman</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal Tambah Produk UMKM -->
-    <div class="modal-overlay" id="modalProduct">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Tambah Produk UMKM Ndawung Kulon</h3>
-                <button class="btn-close" onclick="App.closeModal('modalProduct')">&times;</button>
-            </div>
-            <form onsubmit="App.addProduct(event)">
-                <div class="form-group">
-                    <label>Nama Produk / Jasa:</label>
-                    <input type="text" id="prodName" class="form-control" placeholder="Contoh: Soto Ayam Bu Warno" required>
+    <!-- MODAL 3: ADD UMKM PRODUCT -->
+    <div id="modalAddProduct" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
+            <button onclick="closeModal('modalAddProduct')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Daftarkan Produk UMKM Warga</h3>
+            <form onsubmit="saveProductSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Nama Produk / Jasa</label>
+                    <input type="text" id="prodName" required placeholder="Contoh: Keripik Tempe Mendoan Bu Sumi" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
-                <div class="form-group">
-                    <label>Kategori:</label>
-                    <select id="prodCategory" class="form-control">
-                        <option value="Kuliner">Kuliner / Makanan</option>
-                        <option value="Minuman">Minuman</option>
-                        <option value="Kerajinan">Kerajinan / Kerajinan Tangan</option>
-                        <option value="Tanaman">Tanaman & Pertanian</option>
-                        <option value="Jasa">Jasa / Pelayanan</option>
-                    </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <select id="prodCategory" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Makanan & Minuman">Makanan & Minuman</option>
+                            <option value="Kerajinan">Kerajinan & Craft</option>
+                            <option value="Jasa">Jasa & Servis</option>
+                            <option value="Pertanian/Tanaman">Tanaman & Pertanian</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Harga (Rupiah)</label>
+                        <input type="number" id="prodPrice" required placeholder="15000" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Harga (Rp):</label>
-                    <input type="number" id="prodPrice" class="form-control" placeholder="15000" required>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Nama Penjual / Pemilik</label>
+                        <input type="text" id="prodSeller" required placeholder="Bu Sumi (Rumah No. 12)" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Nomor WhatsApp (Contoh: 08123456789)</label>
+                        <input type="text" id="prodPhone" required placeholder="08123456789" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Nama Penjual / Pemilik UMKM:</label>
-                    <input type="text" id="prodSeller" class="form-control" placeholder="Contoh: Bu Warno" required>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">URL Foto Produk (Opsional)</label>
+                    <input type="url" id="prodImage" placeholder="https://images.unsplash.com/photo-..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
-                <div class="form-group">
-                    <label>Nomor WhatsApp (Contoh: 081234567890):</label>
-                    <input type="text" id="prodWa" class="form-control" placeholder="081234567890" required>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Deskripsi Singkat Produk</label>
+                    <textarea id="prodDesc" rows="2" placeholder="Sebutkan varian rasa, keunggulan, atau jam buka..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
                 </div>
-                <div class="form-group">
-                    <label>Deskripsi Singkat:</label>
-                    <textarea id="prodDesc" class="form-control" rows="2" placeholder="Soto ayam bening segar khas Jawa..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Foto Produk (Upload / Opsional):</label>
-                    <input type="file" id="prodImgFile" class="form-control" accept="image/*" onchange="App.handleImageUpload(event, 'prodImgPreview')">
-                    <input type="hidden" id="prodImgPreview">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Produk</button>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Simpan & Tampilkan Produk
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Modal Tambah Kas RT -->
-    <div class="modal-overlay" id="modalKas">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Catat Transaksi Kas RT 05</h3>
-                <button class="btn-close" onclick="App.closeModal('modalKas')">&times;</button>
-            </div>
-            <form onsubmit="App.addKasTransaction(event)">
-                <div class="form-group">
-                    <label>Jenis Transaksi:</label>
-                    <select id="kasType" class="form-control">
-                        <option value="in">Pemasukan (Uang Masuk)</option>
-                        <option value="out">Pengeluaran (Uang Keluar)</option>
+    <!-- MODAL 4: ADD CASH ENTRY -->
+    <div id="modalAddKas" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeModal('modalAddKas')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Catat Transaksi Kas RT</h3>
+            <form onsubmit="saveKasSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Jenis Transaksi</label>
+                    <select id="kasType" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="in">Pemasukan (+)</option>
+                        <option value="out">Pengeluaran (-)</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Jumlah nominal (Rp):</label>
-                    <input type="number" id="kasAmount" class="form-control" placeholder="100000" required>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Keterangan Transaksi</label>
+                    <input type="text" id="kasDesc" required placeholder="Contoh: Iuran Bulanan Warga / Pembelian Lampu Jalan" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
-                <div class="form-group">
-                    <label>Keterangan Transaksi:</label>
-                    <input type="text" id="kasDesc" class="form-control" placeholder="Contoh: Iuran Warga Bulan September" required>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Jumlah (Rupiah)</label>
+                    <input type="number" id="kasAmount" required placeholder="100000" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
-                <div class="form-group">
-                    <label>Tanggal Transaksi:</label>
-                    <input type="text" id="kasDate" class="form-control" placeholder="Contoh: 15/09/2026" required>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <input type="text" id="kasCategory" required placeholder="Iuran / Keamanan / Kebersihan" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Tanggal</label>
+                        <input type="text" id="kasDate" required placeholder="27 Sep 2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Transaksi</button>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Simpan Transaksi Kas
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div class="toast-notification" id="toast">Pesan notifikasi</div>
+    <!-- Custom Toast Notification Box -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
 
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        const DEFAULT_PASSWORDS = {
-            warga: "warga05",
-            admin: "admin05"
+        // Default System Passwords & Storage Keys
+        const STORAGE_KEYS = {
+            PASSWORDS: 'rt05_passwords_v1',
+            SESSION: 'rt05_session_v1',
+            NEWS: 'rt05_news_v1',
+            FEEDS: 'rt05_feeds_v1',
+            PRODUCTS: 'rt05_products_v1',
+            KAS: 'rt05_kas_v1'
         };
 
-        const DEFAULT_NEWS = [
+        // Application State
+        let passwords = { warga: 'warga05', admin: 'admin05' };
+        let session = { loggedIn: false, role: 'guest', name: 'Tamu' };
+        let newsData = [];
+        let feedsData = [];
+        let productsData = [];
+        let kasData = [];
+
+        // Default Mock Data if localStorage empty
+        const defaultNews = [
             {
-                id: 1,
-                title: "Kerja Bakti Masal & Pembersihan Selokan RT 05",
-                category: "Kebersihan",
-                date: "Minggu, 12 Oktober 2026 - 07.00 WIB",
-                content: "Dihimbau kepada seluruh warga RT 05 Ndawung Kulon untuk berpartisipasi dalam kerja bakti pembersihan selokan dan perapihan tanaman guna menyambut musim penghujan. Harap membawa cangkul atau sabit masing-masing."
+                id: 'n1',
+                title: 'Jadwal Kerja Bakti Bersih Selokan & Taman RT 05 Pekan Ini',
+                category: 'Kebersihan',
+                date: 'Minggu, 4 Oktober 2026',
+                content: 'Dihimbau seluruh bapak/ibu warga RT 05 Ndawung Kulon untuk berpartisipasi dalam kerja bakti pembersihan saluran drainase dan perapihan tanaman umum gardu mulai pukul 06.30 WIB.',
+                author: 'Pengurus RT 05'
             },
             {
-                id: 2,
-                title: "Jadwal Ronda Malam & Pos Kamling Bulan Ini",
-                category: "Keamanan",
-                date: "Jumat, 03 Oktober 2026",
-                content: "Jadwal ronda malam telah diperbarui. Harap setiap ketua regu mengontrol kehadiran anggota dan mencatat di buku mutasi pos ronda demi menjaga keamanan wilayah kita bersama."
+                id: 'n2',
+                title: 'Jadwal Pos Ronda & Sistem Keamanan Lingkungan (Siskamling)',
+                category: 'Keamanan',
+                date: 'Berlaku Mulai Oktober 2026',
+                content: 'Jadwal ronda malam kelompok 1 sampai 4 telah terbit. Setiap warga yang piket diharapkan hadir di pos ronda gardu utama pukul 22.00 WIB.',
+                author: 'Seksi Keamanan RT'
+            },
+            {
+                id: 'n3',
+                title: 'Pemisahan Sampah Organik & Anorganik Rumah Tangga',
+                category: 'Pengumuman',
+                date: '25 September 2026',
+                content: 'Dalam rangka menjaga lingkungan Ndawung Kulon yang asri, mohon warga memilah sisa makanan dan plastik pada tempat sampah terpisah sebelum diangkut petugas.',
+                author: 'Ketua RT 05'
             }
         ];
 
-        const DEFAULT_FEEDS = [
+        const defaultFeeds = [
             {
-                id: 1,
-                author: "Pak Slamet",
-                text: "Alhamdulillah sore ini pos ronda RT 05 selesai dicat ulang kawan-kawan. Terima kasih buat mas-mas yang ikutan!",
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'><rect width='100%' height='100%' fill='%23198754'/><text x='50%' y='50%' fill='%23ffffff' font-family='sans-serif' font-size='24' font-weight='bold' text-anchor='middle'>📷 Pos Ronda RT 05 Ndawung Kulon</text></svg>",
+                id: 'f1',
+                author: 'Pak Supri (Ketua RT)',
+                role: 'admin',
+                time: '2 jam yang lalu',
+                content: 'Alhamdulillah, pengerjaan pengecatan Pos Ronda RT 05 sudah selesai 100%. Terima kasih bapak-bapak yang gotong royong kemarin malam! 🌿🛡️',
+                image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80',
                 likes: 8,
                 comments: [
-                    { user: "Bu Sri", text: "Mantap pak, makin berseri kampung kita!" },
-                    { user: "Mas Joko", text: "Nanti malam jadwal saya ronda siap!" }
+                    { author: 'Bu Sumi', text: 'Mantap Pak RT, jadi bersih dan terang!', date: '1 jam lalu' }
                 ]
+            },
+            {
+                id: 'f2',
+                author: 'Mas Joko (Warga Block B)',
+                role: 'warga',
+                time: 'Yesterday',
+                content: 'Mengingatkan bapak/ibu, besok pagi bibit cabai dan bayam segar dari kebun hidroponik RT 05 sudah panen yaa. Bisa ambil di rumah saya. 👍',
+                image: '',
+                likes: 5,
+                comments: []
             }
         ];
 
-        const DEFAULT_PRODUCTS = [
+        const defaultProducts = [
             {
-                id: 1,
-                name: "Soto Ayam Kampung Bu Warno",
-                category: "Kuliner",
+                id: 'p1',
+                name: 'Keripik Tempe Mendoan Bu Sumi',
+                category: 'Makanan & Minuman',
                 price: 12000,
-                seller: "Bu Warno",
-                wa: "081234567890",
-                desc: "Soto ayam segar kuah bening gurih khas Ndawung Kulon. Dilengkapi koya renyah.",
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='100%' height='100%' fill='%23fef3c7'/><text x='50%' y='50%' fill='%23d97706' font-family='sans-serif' font-size='20' font-weight='bold' text-anchor='middle'>🍲 Soto Ayam Bu Warno</text></svg>"
+                seller: 'Bu Sumi (Rumah No. 12)',
+                phone: '081234567890',
+                description: 'Keripik tempe gurih renyah tanpa pengawet. Tersedia rasa original dan pedas manis.',
+                image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&auto=format&fit=crop&q=80'
             },
             {
-                id: 2,
-                name: "Keripik Tempe Mendoan Crispy",
-                category: "Kuliner",
+                id: 'p2',
+                name: 'Sambal Bawang Ndawung Kulon',
+                category: 'Makanan & Minuman',
                 price: 15000,
-                seller: "Mas Joko",
-                wa: "082198765432",
-                desc: "Renyah, gurih, tanpa bahan pengawet. Cocok untuk camilan santai keluarga.",
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='100%' height='100%' fill='%23ffedd5'/><text x='50%' y='50%' fill='%23c2410c' font-family='sans-serif' font-size='20' font-weight='bold' text-anchor='middle'>🥔 Keripik Tempe Mendoan</text></svg>"
+                seller: 'Mbak Rina (Rumah No. 05)',
+                phone: '081298765432',
+                description: 'Sambal racikan rumahan dengan cabe segar dari pekarangan RT 05.',
+                image: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=600&auto=format&fit=crop&q=80'
             },
             {
-                id: 3,
-                name: "Bibit Tanaman Cabai Rawit Super",
-                category: "Tanaman",
-                price: 10000,
-                seller: "Pak Tejo",
-                wa: "085711223344",
-                desc: "Bibit cabai unggul siap tanam di polibag, cepat berbuah lebat.",
-                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'><rect width='100%' height='100%' fill='%23dcfce7'/><text x='50%' y='50%' fill='%2315803d' font-family='sans-serif' font-size='20' font-weight='bold' text-anchor='middle'>🌱 Bibit Cabai Rawit</text></svg>"
+                id: 'p3',
+                name: 'Bibit Cabai & Sawi Organik',
+                category: 'Pertanian/Tanaman',
+                price: 8000,
+                seller: 'Pak Joko (Rumah No. 21)',
+                phone: '085678901234',
+                description: 'Bibit tanaman siap tanam dalam polybag. Cocok untuk memperasri halaman rumah.',
+                image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 'p4',
+                name: 'Jasa Servis Elektronik & Pompa Air',
+                category: 'Jasa',
+                price: 50000,
+                seller: 'Pak Supri (Teknik RT 05)',
+                phone: '087812345678',
+                description: 'Melayani perbaikan kipas angin, mesin cuci, dan instalasi pipa air warga RT 05.',
+                image: ''
             }
         ];
 
-        const DEFAULT_KAS = [
-            { id: 1, date: "01/09/2026", desc: "Iuran Bulanan Warga September (40 KK)", type: "in", amount: 2000000 },
-            { id: 2, date: "05/09/2026", desc: "Pembelian Lampu LED & Kabel Pos Ronda", type: "out", amount: 350000 },
-            { id: 3, date: "10/09/2026", desc: "Sumbangan Donatur Kerja Bakti", type: "in", amount: 500000 },
-            { id: 4, date: "12/09/2026", desc: "Konsumsi Kerja Bakti & Snack Warga", type: "out", amount: 250000 }
+        const defaultKas = [
+            { id: 'k1', date: '01 Sep 2026', type: 'in', description: 'Iuran Warga Bulanan (30 KK)', amount: 1500000, category: 'Iuran Warga' },
+            { id: 'k2', date: '05 Sep 2026', type: 'out', description: 'Pembelian Cat & Lampu Pos Ronda', amount: 350000, category: 'Fasilitas' },
+            { id: 'k3', date: '12 Sep 2026', type: 'out', description: 'Konsumsi Kerja Bakti Kebersihan', amount: 150000, category: 'Kegiatan' },
+            { id: 'k4', date: '20 Sep 2026', type: 'in', description: 'Sumbangan Donatur Kas Keamanan', amount: 500000, category: 'Donasi' }
         ];
 
-        /* Safe localStorage wrapper with fallback for offline file:// restrictions */
-        const Storage = {
-            memoryStore: {},
-            get(key, fallback) {
-                try {
-                    const data = localStorage.getItem(key);
-                    return data ? JSON.parse(data) : fallback;
-                } catch (e) {
-                    return this.memoryStore[key] || fallback;
-                }
-            },
-            set(key, value) {
-                try {
-                    localStorage.setItem(key, JSON.stringify(value));
-                } catch (e) {
-                    this.memoryStore[key] = value;
-                }
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            // Load Passwords
+            const storedPass = localStorage.getItem(STORAGE_KEYS.PASSWORDS);
+            if (storedPass) {
+                passwords = JSON.parse(storedPass);
+            } else {
+                localStorage.setItem(STORAGE_KEYS.PASSWORDS, JSON.stringify(passwords));
             }
-        };
 
-        const App = {
-            currentUser: null, // { role: 'warga' | 'admin' }
-            passwords: null,
-            news: [],
-            feeds: [],
-            products: [],
-            kas: [],
+            // Load Session
+            const storedSession = localStorage.getItem(STORAGE_KEYS.SESSION);
+            if (storedSession) {
+                session = JSON.parse(storedSession);
+            } else {
+                // Default to Warga logged in automatically for easy first test
+                session = { loggedIn: true, role: 'warga', name: 'Warga RT 05' };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+            }
 
-            init() {
-                this.passwords = Storage.get('rt05_passwords', DEFAULT_PASSWORDS);
-                this.news = Storage.get('rt05_news', DEFAULT_NEWS);
-                this.feeds = Storage.get('rt05_feeds', DEFAULT_FEEDS);
-                this.products = Storage.get('rt05_products', DEFAULT_PRODUCTS);
-                this.kas = Storage.get('rt05_kas', DEFAULT_KAS);
+            // Load Data Arrays
+            newsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.NEWS)) || defaultNews;
+            feedsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.FEEDS)) || defaultFeeds;
+            productsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS)) || defaultProducts;
+            kasData = JSON.parse(localStorage.getItem(STORAGE_KEYS.KAS)) || defaultKas;
 
-                // Check stored login session
-                const savedUser = Storage.get('rt05_session', null);
-                if (savedUser) {
-                    this.currentUser = savedUser;
-                    this.showMainApp();
+            // Save default if first load
+            if (!localStorage.getItem(STORAGE_KEYS.NEWS)) localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            if (!localStorage.getItem(STORAGE_KEYS.FEEDS)) localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            if (!localStorage.getItem(STORAGE_KEYS.KAS)) localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+
+            updateUIForSession();
+            renderNews();
+            renderFeeds();
+            renderProducts();
+            renderKas();
+            updateAdminStats();
+        }
+
+        function updateUIForSession() {
+            const badge = document.getElementById('userBadge');
+            const authText = document.getElementById('authBtnText');
+            const authIcon = document.getElementById('authBtnIcon');
+            const adminBadge = document.getElementById('adminTabBadge');
+            const addNewsBtn = document.getElementById('addNewsBtn');
+            const addKasBtn = document.getElementById('addKasBtn');
+            const kasActionTh = document.getElementById('kasActionTh');
+
+            if (session.loggedIn) {
+                authText.textContent = 'Keluar';
+                authIcon.className = 'fa-solid fa-right-from-bracket';
+                badge.classList.remove('hidden');
+
+                if (session.role === 'admin') {
+                    badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+                    badge.innerHTML = `<i class="fa-solid fa-user-gear"></i> ${session.name}`;
+                    adminBadge.classList.remove('hidden');
+                    addNewsBtn.classList.remove('hidden');
+                    addKasBtn.classList.remove('hidden');
+                    if (kasActionTh) kasActionTh.classList.remove('hidden');
                 } else {
-                    this.showLogin();
+                    badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+                    badge.innerHTML = `<i class="fa-solid fa-user"></i> ${session.name}`;
+                    adminBadge.classList.add('hidden');
+                    addNewsBtn.classList.add('hidden');
+                    addKasBtn.classList.add('hidden');
+                    if (kasActionTh) kasActionTh.classList.add('hidden');
                 }
+            } else {
+                authText.textContent = 'Masuk Portal';
+                authIcon.className = 'fa-solid fa-right-to-bracket';
+                badge.classList.add('hidden');
+                adminBadge.classList.add('hidden');
+                addNewsBtn.classList.add('hidden');
+                addKasBtn.classList.add('hidden');
+                if (kasActionTh) kasActionTh.classList.add('hidden');
+            }
 
-                // Update settings form default values
-                document.getElementById('passWargaInput').value = this.passwords.warga;
-                document.getElementById('passAdminInput').value = this.passwords.admin;
-            },
+            // Update feed user box
+            document.getElementById('feedUserName').textContent = session.loggedIn ? session.name : 'Tamu Warga';
+        }
 
-            showToast(msg) {
-                const toast = document.getElementById('toast');
-                toast.innerText = msg;
-                toast.style.display = 'block';
-                setTimeout(() => {
-                    toast.style.display = 'none';
-                }, 3000);
-            },
+        function switchTab(tabName) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Reset nav tab styles
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('border-emerald-600', 'text-emerald-600');
+                btn.classList.add('border-transparent', 'text-slate-600');
+            });
 
-            handleLogin(e) {
-                e.preventDefault();
-                const role = document.querySelector('input[name="loginRole"]:checked').value;
-                const inputPass = document.getElementById('loginPassword').value.trim();
+            // Show selected tab content
+            const activeSec = document.getElementById(`sec-${tabName}`);
+            const activeTab = document.getElementById(`tab-${tabName}`);
 
-                const validPassword = this.passwords[role];
+            if (activeSec && activeTab) {
+                activeSec.classList.remove('hidden');
+                activeTab.classList.remove('border-transparent', 'text-slate-600');
+                activeTab.classList.add('border-emerald-600', 'text-emerald-600');
+            }
 
-                if (inputPass === validPassword) {
-                    this.currentUser = { role: role };
-                    Storage.set('rt05_session', this.currentUser);
-                    document.getElementById('loginPassword').value = '';
-                    this.showToast(`Berhasil masuk sebagai ${role === 'admin' ? 'Admin RT 05' : 'Warga RT 05'}`);
-                    this.showMainApp();
-                } else {
-                    this.showToast(`❌ Password untuk ${role.toUpperCase()} salah! Silakan cek petunjuk password.`);
-                }
-            },
+            // Guard admin tab if not logged in as admin
+            if (tabName === 'admin' && session.role !== 'admin') {
+                showToast('Halaman Panel Admin khusus untuk Pengurus RT!', 'error');
+            }
+        }
 
-            logout() {
-                this.currentUser = null;
-                Storage.set('rt05_session', null);
-                this.showLogin();
-                this.showToast("Anda telah keluar dari aplikasi.");
-            },
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
 
-            showLogin() {
-                document.getElementById('loginView').style.display = 'block';
-                document.getElementById('appView').style.display = 'none';
-                document.getElementById('sessionHeaderInfo').style.display = 'none';
-            },
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
 
-            showMainApp() {
-                document.getElementById('loginView').style.display = 'none';
-                document.getElementById('appView').style.display = 'block';
-                document.getElementById('sessionHeaderInfo').style.display = 'flex';
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye';
+            }
+        }
 
-                // Update header role badge
-                const roleText = document.getElementById('roleText');
-                roleText.innerText = this.currentUser.role === 'admin' ? 'Admin RT 05' : 'Warga RT 05';
+        function handleAuthAction() {
+            if (session.loggedIn) {
+                // Logout action
+                session = { loggedIn: false, role: 'guest', name: 'Tamu' };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+                updateUIForSession();
+                showToast('Anda telah keluar dari akun.', 'info');
+                switchTab('berita');
+            } else {
+                openModal('modalLogin');
+            }
+        }
 
-                // Show/Hide Admin specific features
-                const isAdmin = this.currentUser.role === 'admin';
-                document.getElementById('adminTabBtn').style.display = isAdmin ? 'flex' : 'none';
-                document.getElementById('adminBeritaAction').style.display = isAdmin ? 'block' : 'none';
-                document.getElementById('adminKasAction').style.display = isAdmin ? 'block' : 'none';
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const role = document.querySelector('input[name="loginRole"]:checked').value;
+            const passInput = document.getElementById('loginPasswordInput').value;
 
-                this.renderNews();
-                this.renderFeeds();
-                this.renderProducts();
-                this.renderKas();
-            },
+            const expectedPass = passwords[role];
 
-            switchTab(tabName) {
-                const tabs = document.querySelectorAll('.tab-content');
-                tabs.forEach(t => t.classList.remove('active'));
-
-                const tabBtns = document.querySelectorAll('.tab-btn');
-                tabBtns.forEach(b => b.classList.remove('active'));
-
-                const targetTab = document.getElementById(`tab-${tabName}`);
-                if (targetTab) {
-                    targetTab.classList.add('active');
-                }
-
-                // Highlight active button
-                const btnIndex = ['berita', 'feed', 'marketplace', 'kas', 'admin'].indexOf(tabName);
-                if (btnIndex !== -1 && tabBtns[btnIndex]) {
-                    tabBtns[btnIndex].classList.add('active');
-                }
-            },
-
-            renderNews() {
-                const container = document.getElementById('beritaList');
-                if (this.news.length === 0) {
-                    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:2rem;">Belum ada pengumuman resmi.</p>`;
-                    return;
-                }
-
-                let html = '';
-                this.news.forEach(item => {
-                    html += `
-                        <div class="card" style="margin-bottom:1rem; border-left: 4px solid var(--primary-color);">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
-                                <span class="product-badge">${item.category}</span>
-                                ${this.currentUser.role === 'admin' ? `
-                                    <button class="btn btn-danger btn-sm" onclick="App.deleteNews(${item.id})">Hapus</button>
-                                ` : ''}
-                            </div>
-                            <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:0.25rem;">${item.title}</h3>
-                            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">📅 ${item.date}</p>
-                            <p style="font-size:0.875rem; color:#334155;">${item.content}</p>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            },
-
-            addNews(e) {
-                e.preventDefault();
-                const title = document.getElementById('newsTitle').value.trim();
-                const category = document.getElementById('newsCategory').value;
-                const date = document.getElementById('newsDate').value.trim();
-                const content = document.getElementById('newsContent').value.trim();
-
-                const newItem = {
-                    id: Date.now(),
-                    title, category, date, content
+            if (passInput === expectedPass) {
+                session = {
+                    loggedIn: true,
+                    role: role,
+                    name: role === 'admin' ? 'Pengurus RT 05' : 'Warga RT 05'
                 };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+                updateUIForSession();
+                closeModal('modalLogin');
+                document.getElementById('loginPasswordInput').value = '';
+                showToast(`Berhasil masuk sebagai ${session.name}!`, 'success');
+                renderKas(); // Refresh kas view with admin actions if applicable
+            } else {
+                showToast(`Password ${role.toUpperCase()} salah! Silakan coba lagi.`, 'error');
+            }
+        }
 
-                this.news.unshift(newItem);
-                Storage.set('rt05_news', this.news);
-                this.renderNews();
-                this.closeModal('modalNews');
-                this.showToast('Pengumuman berhasil dipublikasikan!');
-            },
+        function renderNews() {
+            const container = document.getElementById('newsGrid');
+            const query = document.getElementById('searchNews').value.toLowerCase();
 
-            deleteNews(id) {
-                this.news = this.news.filter(n => n.id !== id);
-                Storage.set('rt05_news', this.news);
-                this.renderNews();
-                this.showToast('Pengumuman dihapus.');
-            },
+            const filtered = newsData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
 
-            renderFeeds() {
-                const container = document.getElementById('feedList');
-                if (this.feeds.length === 0) {
-                    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:2rem;">Belum ada kabar postingan warga.</p>`;
-                    return;
-                }
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-solid fa-newspaper text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Tidak ada berita atau pengumuman ditemukan.</p>
+                    </div>
+                `;
+                return;
+            }
 
-                let html = '';
-                this.feeds.forEach(post => {
-                    const initials = post.author ? post.author.charAt(0).toUpperCase() : 'W';
-                    let commentsHtml = '';
-                    if (post.comments && post.comments.length > 0) {
-                        commentsHtml = '<div class="comments-section">';
-                        post.comments.forEach(c => {
-                            commentsHtml += `<div class="comment-item"><span class="comment-user">${c.user}:</span>${c.text}</div>`;
-                        });
-                        commentsHtml += '</div>';
-                    }
+            container.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-200 uppercase tracking-wider">
+                                ${item.category}
+                            </span>
+                            <span class="text-[11px] text-slate-400">
+                                <i class="fa-regular fa-clock mr-1"></i>${item.date}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base leading-snug">${item.title}</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">${item.content}</p>
+                    </div>
 
-                    html += `
-                        <div class="feed-post-card">
-                            <div class="post-author">
-                                <div class="avatar">${initials}</div>
-                                <div class="author-info">
-                                    <h4>${post.author}</h4>
-                                    <span>Warga RT 05</span>
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+                        <span>Oleh: <strong class="text-slate-700">${item.author}</strong></span>
+                        ${session.role === 'admin' ? `
+                            <button onclick="deleteNews('${item.id}')" class="text-rose-600 hover:text-rose-800 font-semibold text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-trash-can"></i> Hapus
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveNewsSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const date = document.getElementById('newsDate').value;
+            const content = document.getElementById('newsContent').value;
+
+            const newItem = {
+                id: 'n_' + Date.now(),
+                title, category, date, content,
+                author: 'Pengurus RT 05'
+            };
+
+            newsData.unshift(newItem);
+            localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            renderNews();
+            updateAdminStats();
+            closeModal('modalAddNews');
+            showToast('Berita RT berhasil diterbitkan!', 'success');
+            
+            // Clear inputs
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsContent').value = '';
+        }
+
+        function deleteNews(id) {
+            newsData = newsData.filter(n => n.id !== id);
+            localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            renderNews();
+            updateAdminStats();
+            showToast('Berita telah dihapus.', 'info');
+        }
+
+        function toggleImageInput() {
+            const box = document.getElementById('imageInputBox');
+            box.classList.toggle('hidden');
+        }
+
+        function createFeedPost() {
+            if (!session.loggedIn) {
+                openModal('modalLogin');
+                return;
+            }
+
+            const content = document.getElementById('postContent').value.trim();
+            const imageUrl = document.getElementById('postImageUrl').value.trim();
+
+            if (!content) {
+                showToast('Tuliskan sesuatu untuk diposting!', 'error');
+                return;
+            }
+
+            const newPost = {
+                id: 'f_' + Date.now(),
+                author: session.name,
+                role: session.role,
+                time: 'Baru saja',
+                content,
+                image: imageUrl,
+                likes: 0,
+                comments: []
+            };
+
+            feedsData.unshift(newPost);
+            localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            renderFeeds();
+            updateAdminStats();
+
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImageUrl').value = '';
+            document.getElementById('imageInputBox').classList.add('hidden');
+            showToast('Postingan warga berhasil dibagikan!', 'success');
+        }
+
+        function renderFeeds() {
+            const container = document.getElementById('feedStream');
+            if (feedsData.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-regular fa-comments text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Belum ada postingan warga. Jadilah yang pertama!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = feedsData.map(post => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+                    <!-- Post Header -->
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full ${post.role === 'admin' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'} flex items-center justify-center font-bold">
+                                <i class="fa-solid ${post.role === 'admin' ? 'fa-user-gear' : 'fa-user'}"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="text-sm font-bold text-slate-800">${post.author}</h4>
+                                    ${post.role === 'admin' ? '<span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Pengurus RT</span>' : ''}
+                                </div>
+                                <span class="text-[11px] text-slate-400">${post.time}</span>
+                            </div>
+                        </div>
+
+                        ${session.role === 'admin' ? `
+                            <button onclick="deleteFeedPost('${post.id}')" class="text-slate-400 hover:text-rose-600 p-1">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+
+                    <!-- Content Text & Image -->
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${post.content}</p>
+                    ${post.image ? `
+                        <div class="rounded-xl overflow-hidden max-h-80 border border-slate-100">
+                            <img src="${post.image}" alt="Feed image" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x300/10b981/ffffff?text=Foto+Warga+RT+05'">
+                        </div>
+                    ` : ''}
+
+                    <!-- Actions Bar -->
+                    <div class="flex items-center gap-4 pt-3 border-t border-slate-100 text-xs">
+                        <button onclick="likePost('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-600 hover:text-rose-600 transition-colors">
+                            <i class="fa-regular fa-heart text-rose-500"></i> ${post.likes} Suka
+                        </button>
+                        <button onclick="toggleComments('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-600 hover:text-emerald-600 transition-colors">
+                            <i class="fa-regular fa-comment text-emerald-600"></i> ${post.comments ? post.comments.length : 0} Komentar
+                        </button>
+                    </div>
+
+                    <!-- Comments Container -->
+                    <div id="comments_${post.id}" class="hidden space-y-3 pt-3 border-t border-slate-100 bg-slate-50 p-3 rounded-xl">
+                        <div class="space-y-2">
+                            ${(post.comments || []).map(c => `
+                                <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                                    <div class="flex justify-between font-bold text-slate-800 text-[11px]">
+                                        <span>${c.author}</span>
+                                        <span class="text-slate-400 font-normal">${c.date}</span>
+                                    </div>
+                                    <p class="text-slate-600 mt-1">${c.text}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Add Comment Form -->
+                        <div class="flex gap-2 pt-1">
+                            <input type="text" id="inputComment_${post.id}" placeholder="Tulis komentar..." class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                            <button onclick="addComment('${post.id}')" class="bg-emerald-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700">
+                                Kirim
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likePost(id) {
+            const post = feedsData.find(f => f.id === id);
+            if (post) {
+                post.likes += 1;
+                localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+                renderFeeds();
+            }
+        }
+
+        function toggleComments(id) {
+            const el = document.getElementById(`comments_${id}`);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        function addComment(id) {
+            if (!session.loggedIn) {
+                openModal('modalLogin');
+                return;
+            }
+            const input = document.getElementById(`inputComment_${id}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = feedsData.find(f => f.id === id);
+            if (post) {
+                if (!post.comments) post.comments = [];
+                post.comments.push({
+                    author: session.name,
+                    text: text,
+                    date: 'Baru saja'
+                });
+                localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+                renderFeeds();
+                document.getElementById(`comments_${id}`).classList.remove('hidden');
+            }
+        }
+
+        function deleteFeedPost(id) {
+            feedsData = feedsData.filter(f => f.id !== id);
+            localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            renderFeeds();
+            updateAdminStats();
+            showToast('Postingan berhasil dihapus.', 'info');
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsGrid');
+            const cat = document.getElementById('productCatFilter').value;
+
+            const filtered = productsData.filter(p => cat === 'Semua' || p.category === cat);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-solid fa-basket-shopping text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Belum ada produk UMKM untuk kategori ini.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(prod => {
+                // WhatsApp pre-filled link builder
+                const cleanPhone = prod.phone.replace(/[^0-9]/g, '');
+                const formattedPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+                const waMsg = encodeURIComponent(`Halo ${prod.seller}, saya warga RT 05 tertarik membeli produk "${prod.name}" seharga Rp ${prod.price.toLocaleString('id-ID')}. Apakah masih tersedia?`);
+                const waUrl = `https://wa.me/${formattedPhone}?text=${waMsg}`;
+
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <!-- Image -->
+                            <div class="h-40 bg-slate-100 relative overflow-hidden">
+                                <img src="${prod.image || 'https://placehold.co/400x300/10b981/ffffff?text=Produk+UMKM+RT05'}" alt="${prod.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/10b981/ffffff?text=UMKM+RT+05'">
+                                <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">
+                                    ${prod.category}
+                                </span>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="p-4 space-y-2">
+                                <h3 class="font-bold text-slate-800 text-sm leading-snug line-clamp-1">${prod.name}</h3>
+                                <p class="text-emerald-700 font-extrabold text-base">Rp ${prod.price.toLocaleString('id-ID')}</p>
+                                <p class="text-xs text-slate-500 line-clamp-2">${prod.description || 'Tidak ada deskripsi.'}</p>
+                                <div class="text-[11px] text-slate-600 font-medium pt-1">
+                                    <i class="fa-solid fa-store text-emerald-600 mr-1"></i>${prod.seller}
                                 </div>
                             </div>
-                            <p style="font-size:0.9rem; color:#1e293b; white-space: pre-line;">${post.text}</p>
-                            ${post.image ? `<img src="${post.image}" class="post-image" alt="Foto postingan">` : ''}
-                            
-                            <div class="post-actions">
-                                <button class="btn-action" onclick="App.likePost(${post.id})">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                    ${post.likes || 0} Suka
+                        </div>
+
+                        <!-- Action Footer -->
+                        <div class="p-4 pt-0 space-y-2">
+                            <a href="${waUrl}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Pesan via WhatsApp
+                            </a>
+                            ${session.role === 'admin' ? `
+                                <button onclick="deleteProduct('${prod.id}')" class="w-full text-rose-600 hover:text-rose-800 font-semibold text-[11px] py-1 text-center block">
+                                    <i class="fa-solid fa-trash-can mr-1"></i> Hapus Produk (Admin)
                                 </button>
-                            </div>
-
-                            ${commentsHtml}
-
-                            <div style="display:flex; gap:0.5rem; margin-top:0.75rem;">
-                                <input type="text" id="commentInput_${post.id}" class="form-control" style="font-size:0.8rem; padding:0.4rem 0.6rem;" placeholder="Tulis komentar...">
-                                <button class="btn btn-primary btn-sm" onclick="App.addComment(${post.id})">Kirim</button>
-                            </div>
+                            ` : ''}
                         </div>
-                    `;
-                });
-                container.innerHTML = html;
-            },
+                    </div>
+                `;
+            }).join('');
+        }
 
-            addFeedPost(e) {
-                e.preventDefault();
-                const author = document.getElementById('feedAuthorName').value.trim();
-                const text = document.getElementById('feedText').value.trim();
-                const image = document.getElementById('feedImgPreview').value;
+        function saveProductSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('prodName').value;
+            const category = document.getElementById('prodCategory').value;
+            const price = parseInt(document.getElementById('prodPrice').value);
+            const seller = document.getElementById('prodSeller').value;
+            const phone = document.getElementById('prodPhone').value;
+            const image = document.getElementById('prodImage').value;
+            const description = document.getElementById('prodDesc').value;
 
-                const newPost = {
-                    id: Date.now(),
-                    author,
-                    text,
-                    image: image || null,
-                    likes: 0,
-                    comments: []
-                };
+            const newProd = {
+                id: 'p_' + Date.now(),
+                name, category, price, seller, phone, image, description
+            };
 
-                this.feeds.unshift(newPost);
-                Storage.set('rt05_feeds', this.feeds);
-                
-                // Clear form
-                document.getElementById('feedForm').reset();
-                document.getElementById('feedImgPreview').value = '';
-                this.renderFeeds();
-                this.showToast('Kabar warga berhasil diposting!');
-            },
+            productsData.unshift(newProd);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            renderProducts();
+            updateAdminStats();
+            closeModal('modalAddProduct');
+            showToast('Produk UMKM Anda berhasil didaftarkan!', 'success');
 
-            likePost(id) {
-                const post = this.feeds.find(f => f.id === id);
-                if (post) {
-                    post.likes = (post.likes || 0) + 1;
-                    Storage.set('rt05_feeds', this.feeds);
-                    this.renderFeeds();
-                }
-            },
+            document.getElementById('prodName').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodPhone').value = '';
+        }
 
-            addComment(postId) {
-                const input = document.getElementById(`commentInput_${postId}`);
-                if (!input) return;
-                const text = input.value.trim();
-                if (!text) return;
+        function deleteProduct(id) {
+            productsData = productsData.filter(p => p.id !== id);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            renderProducts();
+            updateAdminStats();
+            showToast('Produk UMKM telah dihapus.', 'info');
+        }
 
-                const post = this.feeds.find(f => f.id === postId);
-                if (post) {
-                    if (!post.comments) post.comments = [];
-                    const user = this.currentUser.role === 'admin' ? 'Admin RT 05' : 'Warga';
-                    post.comments.push({ user, text });
-                    Storage.set('rt05_feeds', this.feeds);
-                    this.renderFeeds();
-                }
-            },
+        function renderKas() {
+            let totalMasuk = 0;
+            let totalKeluar = 0;
 
-            renderProducts() {
-                const container = document.getElementById('productGrid');
-                if (this.products.length === 0) {
-                    container.innerHTML = `<p style="text-align:center; color:var(--text-muted); grid-column:1/-1; padding:2rem;">Belum ada produk UMKM.</p>`;
-                    return;
-                }
+            kasData.forEach(item => {
+                if (item.type === 'in') totalMasuk += item.amount;
+                else totalKeluar += item.amount;
+            });
 
-                let html = '';
-                this.products.forEach(p => {
-                    const formatPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(p.price);
-                    
-                    // Format WhatsApp Link
-                    let cleanWa = p.wa.replace(/\D/g, '');
-                    if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.slice(1);
-                    const msg = encodeURIComponent(`Halo ${p.seller}, saya warga RT 05 ingin memesan ${p.name}. Apakah masih tersedia?`);
-                    const waLink = `https://wa.me/${cleanWa}?text=${msg}`;
+            const totalSaldo = totalMasuk - totalKeluar;
 
-                    const defaultPlaceholder = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='%23e2e8f0'/><text x='50%' y='50%' fill='%2364748b' font-family='sans-serif' font-size='18' text-anchor='middle'>Foto Produk UMKM</text></svg>";
+            document.getElementById('kasTotalSaldo').textContent = `Rp ${totalSaldo.toLocaleString('id-ID')}`;
+            document.getElementById('kasTotalMasuk').textContent = `Rp ${totalMasuk.toLocaleString('id-ID')}`;
+            document.getElementById('kasTotalKeluar').textContent = `Rp ${totalKeluar.toLocaleString('id-ID')}`;
 
-                    html += `
-                        <div class="product-card">
-                            <img src="${p.image || defaultPlaceholder}" class="product-img" alt="${p.name}">
-                            <div class="product-body">
-                                <span class="product-badge">${p.category}</span>
-                                <h4 class="product-title">${p.name}</h4>
-                                <div class="product-price">${formatPrice}</div>
-                                <div class="product-seller">👤 Penjual: ${p.seller}</div>
-                                <p class="product-desc">${p.desc}</p>
-                                <a href="${waLink}" target="_blank" class="btn btn-wa btn-sm">
-                                    💬 Pesan via WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            },
+            const tbody = document.getElementById('kasTableBody');
+            tbody.innerHTML = kasData.map(item => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 text-slate-500 font-medium">${item.date}</td>
+                    <td class="p-4">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.type === 'in' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            ${item.type === 'in' ? 'Pemasukan' : 'Pengeluaran'}
+                        </span>
+                    </td>
+                    <td class="p-4 font-semibold text-slate-800">${item.description}</td>
+                    <td class="p-4 text-slate-500">${item.category}</td>
+                    <td class="p-4 text-right font-extrabold ${item.type === 'in' ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${item.type === 'in' ? '+' : '-'} Rp ${item.amount.toLocaleString('id-ID')}
+                    </td>
+                    ${session.role === 'admin' ? `
+                        <td class="p-4 text-center">
+                            <button onclick="deleteKasEntry('${item.id}')" class="text-rose-600 hover:text-rose-800 font-semibold text-xs">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    ` : ''}
+                </tr>
+            `).join('');
+        }
 
-            addProduct(e) {
-                e.preventDefault();
-                const name = document.getElementById('prodName').value.trim();
-                const category = document.getElementById('prodCategory').value;
-                const price = parseFloat(document.getElementById('prodPrice').value) || 0;
-                const seller = document.getElementById('prodSeller').value.trim();
-                const wa = document.getElementById('prodWa').value.trim();
-                const desc = document.getElementById('prodDesc').value.trim();
-                const image = document.getElementById('prodImgPreview').value;
+        function saveKasSubmit(e) {
+            e.preventDefault();
+            const type = document.getElementById('kasType').value;
+            const description = document.getElementById('kasDesc').value;
+            const amount = parseInt(document.getElementById('kasAmount').value);
+            const category = document.getElementById('kasCategory').value;
+            const date = document.getElementById('kasDate').value;
 
-                const newProd = {
-                    id: Date.now(),
-                    name, category, price, seller, wa, desc,
-                    image: image || null
-                };
+            const newKas = {
+                id: 'k_' + Date.now(),
+                type, description, amount, category, date
+            };
 
-                this.products.unshift(newProd);
-                Storage.set('rt05_products', this.products);
-                this.renderProducts();
-                this.closeModal('modalProduct');
-                this.showToast('Produk UMKM berhasil ditambahkan!');
-            },
+            kasData.unshift(newKas);
+            localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+            renderKas();
+            updateAdminStats();
+            closeModal('modalAddKas');
+            showToast('Transaksi kas berhasil dicatat!', 'success');
+        }
 
-            renderKas() {
-                let totalIn = 0;
-                let totalOut = 0;
+        function deleteKasEntry(id) {
+            kasData = kasData.filter(k => k.id !== id);
+            localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+            renderKas();
+            updateAdminStats();
+            showToast('Catatan kas berhasil dihapus.', 'info');
+        }
 
-                const tbody = document.getElementById('kasTableBody');
-                if (this.kas.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">Belum ada catatan transaksi.</td></tr>`;
-                } else {
-                    let html = '';
-                    this.kas.forEach(item => {
-                        if (item.type === 'in') totalIn += item.amount;
-                        if (item.type === 'out') totalOut += item.amount;
-
-                        const formatAmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(item.amount);
-
-                        html += `
-                            <tr>
-                                <td>${item.date}</td>
-                                <td>${item.desc}</td>
-                                <td>
-                                    <span class="badge-type ${item.type === 'in' ? 'badge-in' : 'badge-out'}">
-                                        ${item.type === 'in' ? 'Pemasukan' : 'Pengeluaran'}
-                                    </span>
-                                </td>
-                                <td style="font-weight:700; color:${item.type === 'in' ? 'var(--primary-color)' : 'var(--danger-color)'}">
-                                    ${item.type === 'in' ? '+' : '-'} ${formatAmt}
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    tbody.innerHTML = html;
-                }
-
-                const totalBalance = totalIn - totalOut;
-
-                document.getElementById('totalIn').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(totalIn);
-                document.getElementById('totalOut').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(totalOut);
-                document.getElementById('totalBalance').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(totalBalance);
-            },
-
-            addKasTransaction(e) {
-                e.preventDefault();
-                const type = document.getElementById('kasType').value;
-                const amount = parseFloat(document.getElementById('kasAmount').value) || 0;
-                const desc = document.getElementById('kasDesc').value.trim();
-                const date = document.getElementById('kasDate').value.trim();
-
-                const newItem = {
-                    id: Date.now(),
-                    date, desc, type, amount
-                };
-
-                this.kas.unshift(newItem);
-                Storage.set('rt05_kas', this.kas);
-                this.renderKas();
-                this.closeModal('modalKas');
-                this.showToast('Transaksi kas berhasil dicatat!');
-            },
-
-            changePasswords(e) {
-                e.preventDefault();
-                const newWarga = document.getElementById('passWargaInput').value.trim();
-                const newAdmin = document.getElementById('passAdminInput').value.trim();
-
-                if (!newWarga || !newAdmin) {
-                    this.showToast('Password tidak boleh kosong!');
-                    return;
-                }
-
-                this.passwords = { warga: newWarga, admin: newAdmin };
-                Storage.set('rt05_passwords', this.passwords);
-                this.showToast('Password Warga & Admin berhasil diperbarui!');
-            },
-
-            resetToFactoryDefaults() {
-                if (confirm('Apakah Anda yakin ingin mengembalikan semua data ke contoh bawaan semula?')) {
-                    Storage.set('rt05_passwords', DEFAULT_PASSWORDS);
-                    Storage.set('rt05_news', DEFAULT_NEWS);
-                    Storage.set('rt05_feeds', DEFAULT_FEEDS);
-                    Storage.set('rt05_products', DEFAULT_PRODUCTS);
-                    Storage.set('rt05_kas', DEFAULT_KAS);
-                    
-                    this.init();
-                    this.showToast('Data berhasil dikembalikan ke pengaturan awal!');
-                }
-            },
-
-            handleImageUpload(event, targetHiddenId) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(targetHiddenId).value = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            },
-
-            openModal(modalId) {
-                const m = document.getElementById(modalId);
-                if (m) m.classList.add('active');
-            },
-
-            closeModal(modalId) {
-                const m = document.getElementById(modalId);
-                if (m) m.classList.remove('active');
+        function updatePassword(targetRole) {
+            if (session.role !== 'admin') {
+                showToast('Hanya Admin yang dapat mengedit password!', 'error');
+                return;
             }
-        };
 
-        // Initialize application on window load
-        window.onload = function() {
-            App.init();
-        };
+            const inputId = targetRole === 'warga' ? 'newWargaPass' : 'newAdminPass';
+            const newPass = document.getElementById(inputId).value.trim();
+
+            if (!newPass) {
+                showToast('Password tidak boleh kosong!', 'error');
+                return;
+            }
+
+            passwords[targetRole] = newPass;
+            localStorage.setItem(STORAGE_KEYS.PASSWORDS, JSON.stringify(passwords));
+            document.getElementById(inputId).value = '';
+
+            showToast(`Password ${targetRole.toUpperCase()} berhasil diperbarui!`, 'success');
+        }
+
+        function updateAdminStats() {
+            document.getElementById('statNewsCount').textContent = newsData.length;
+            document.getElementById('statFeedsCount').textContent = feedsData.length;
+            document.getElementById('statProductsCount').textContent = productsData.length;
+            document.getElementById('statKasCount').textContent = kasData.length;
+        }
+
+        function resetDataToDefault() {
+            if (confirm('Apakah Anda yakin ingin mengembalikan seluruh data ke default bawaan awal?')) {
+                localStorage.clear();
+                initApp();
+                showToast('Seluruh data berhasil di-reset ke standar.', 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            let bgClass = 'bg-slate-800 text-white';
+            let iconClass = 'fa-solid fa-circle-info text-blue-400';
+
+            if (type === 'success') {
+                bgClass = 'bg-emerald-900 text-emerald-100 border border-emerald-700';
+                iconClass = 'fa-solid fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                bgClass = 'bg-rose-900 text-rose-100 border border-rose-700';
+                iconClass = 'fa-solid fa-triangle-exclamation text-rose-400';
+            }
+
+            toast.className = `${bgClass} p-3.5 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2.5 transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="${iconClass} text-base"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Animate Out & Remove
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
     </script>
 </body>
 </html>
